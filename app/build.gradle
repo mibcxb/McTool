@@ -9,6 +9,8 @@ plugins {
 dependencies {
     implementation 'org.apache.commons:commons-text'
     implementation project(':cli')
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'org.slf4j:slf4j-simple'
 }
 
 application {
