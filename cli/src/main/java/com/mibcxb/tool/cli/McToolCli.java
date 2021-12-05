@@ -1,10 +1,14 @@
 package com.mibcxb.tool.cli;
 
-import com.mibcxb.tool.file.FileTools;
+import com.mibcxb.tool.file.FileTool;
+
+import java.util.Map;
+import java.util.Set;
 
 public class McToolCli {
     public static void main(String[] args) {
-        FileTools fileTools = new FileTools();
-        fileTools.detectDuplicate("");
+        FileTool fileTool = new FileTool();
+        Map<String, Set<String>> dupMap = fileTool.detectDuplicate("");
+        System.out.println(dupMap.size());
     }
 }
