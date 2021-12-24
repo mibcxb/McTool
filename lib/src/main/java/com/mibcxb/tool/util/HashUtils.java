@@ -1,23 +1,24 @@
 package com.mibcxb.tool.util;
 
-import com.mibcxb.tool.io.HashStream;
-
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class HashUtils {
+    public static final String ALGO_MD5 = "MD5";
+    public static final String ALGO_SHA_1 = "SHA-1";
+    public static final String ALGO_SHA_256 = "SHA-256";
 
     public static byte[] md5(byte[] data) {
-        return hash(data, HashStream.Algorithm.MD5.algoName);
+        return hash(data, ALGO_MD5);
     }
 
     public static byte[] sha1(byte[] data) {
-        return hash(data, HashStream.Algorithm.SHA1.algoName);
+        return hash(data, ALGO_SHA_1);
     }
 
     public static byte[] sha256(byte[] data) {
-        return hash(data, HashStream.Algorithm.SHA256.algoName);
+        return hash(data, ALGO_SHA_256);
     }
 
     public static byte[] hash(InputStream input, String algorithm) {

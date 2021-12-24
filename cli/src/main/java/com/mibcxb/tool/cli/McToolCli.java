@@ -8,7 +8,7 @@ import java.util.Set;
 public class McToolCli {
     public static void main(String[] args) {
         FileTool fileTool = new FileTool();
-        Map<String, Set<String>> dupMap = fileTool.detectDuplicate("");
+        Map<String, Set<String>> dupMap = fileTool.detectDuplicate("/Users/chenxb/Develop/resource/3649-QyCBeRPz");
         System.out.println(dupMap.size());
     }
 }

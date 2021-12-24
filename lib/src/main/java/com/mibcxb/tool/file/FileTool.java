@@ -1,15 +1,13 @@
 package com.mibcxb.tool.file;
 
-import com.mibcxb.tool.io.HashInputStream;
 import com.mibcxb.tool.util.ByteUtils;
-import com.mibcxb.tool.util.IoUtils;
+import com.mibcxb.tool.util.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.*;
-import java.security.NoSuchAlgorithmException;
+import java.io.File;
 import java.util.*;
 
 import static com.mibcxb.tool.log.MctLog.logger;
-import static com.mibcxb.tool.log.MctLog.printE;
 
 public class FileTool {
 
@@ -36,25 +34,10 @@ public class FileTool {
         String path = file.getAbsolutePath();
         logger().info("detectDuplicate: {}", path);
         if (file.isFile()) {
-            String hashText = null;
-            HashInputStream is = null;
-            try {
-                is = new HashInputStream(new FileInputStream(file));
-                byte[] buf = new byte[IoUtils.BUFFER_SIZE];
-                int len;
-                int size = 0;
-                while ((len = is.read(buf)) != -1) {
-                    size += len;
-                }
-                hashText = ByteUtils.bytes2HexStr(is.getHash());
-            } catch (NoSuchAlgorithmException | IOException e) {
-                printE(e.getMessage(), e);
-            } finally {
-                IoUtils.closeQuietly(is);
-            }
-
-            if (hashText != null) {
-                Set<String> pathSet = dupMap.computeIfAbsent(hashText, k -> new LinkedHashSet<>());
+            byte[] hash = FileUtils.calcSha1(file);
+            String text = ByteUtils.bytes2HexStr(hash);
+            if (StringUtils.isNotBlank(text)) {
+                Set<String> pathSet = dupMap.computeIfAbsent(text, k -> new LinkedHashSet<>());
                 pathSet.add(path);
             }
         } else if (file.isDirectory()) {

@@ -11,6 +11,7 @@ public class ByteUtils {
     }
 
     public static String bytes2HexStr(byte[] bytes) {
+        if (bytes == null) return "";
         StringBuilder buffer = new StringBuilder();
         for (byte b : bytes) {
             buffer.append(byte2HexStr(b));
