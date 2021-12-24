@@ -1,7 +1,7 @@
 package com.mibcxb.tool.util;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 public class FileUtils {
@@ -31,5 +31,29 @@ public class FileUtils {
             IoUtils.closeQuietly(is);
         }
         return hash;
+    }
+
+    public static long saveToFile(File file, String text, boolean append) {
+        byte[] data = text == null ? null : text.getBytes(StandardCharsets.UTF_8);
+        return saveToFile(file, data, append);
+    }
+
+    public static long saveToFile(File file, byte[] data, boolean append) {
+        if (file == null || data == null) return -1;
+
+        long size = 0;
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new ByteArrayInputStream(data);
+            os = new FileOutputStream(file, append);
+            size = IoUtils.copy(is, os);
+        } catch (Throwable tr) {
+            tr.printStackTrace();
+        } finally {
+            IoUtils.closeQuietly(is);
+            IoUtils.closeQuietly(os);
+        }
+        return size;
     }
 }

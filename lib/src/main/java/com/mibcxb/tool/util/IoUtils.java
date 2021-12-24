@@ -15,17 +15,20 @@ public final class IoUtils {
         }
     }
 
-    public static void copy(InputStream source, OutputStream target) throws IOException {
-        copy(source, target, BUFFER_SIZE);
+    public static int copy(InputStream source, OutputStream target) throws IOException {
+        return copy(source, target, BUFFER_SIZE);
     }
 
-    public static void copy(InputStream source, OutputStream target, int bufferSize) throws IOException {
+    public static int copy(InputStream source, OutputStream target, int bufferSize) throws IOException {
+        int size = 0;
         int length;
         byte[] buffer = new byte[bufferSize];
         while ((length = source.read(buffer)) != -1) {
             target.write(buffer, 0, length);
+            size += length;
         }
         target.flush();
+        return size;
     }
 
     public static byte[] read(InputStream source) {
